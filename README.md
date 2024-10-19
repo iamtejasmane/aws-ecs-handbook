@@ -2,7 +2,7 @@
 
 ### Preface
 
-This handbook is nothing but the my own notes and information I've been gathering since last two years from the offical documentation and other oper forums. 
+This handbook is nothing but my own notes and the information I've been gathering since last two years from the offical documentation and other oper forums. 
 
 This might not be helpful for first time Amazon ECS learners. I refer this information and links for my go-to tool while working, optimzing and troubleshooting ECS Clusters. 
 
