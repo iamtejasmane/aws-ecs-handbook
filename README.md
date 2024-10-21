@@ -127,4 +127,18 @@ ____________
 
 ### ECS-optimized Linux AMIs
 
+
+ECS-optimized Amazon Machine Image (AMI) - Preconfigured image to run your container workload on ECS Amazon Linux machines and tested by AWS Engineers.
+
+Components: 
+* Preconfigured Storage 
+* ECS init
+* Docker 
+* ECS Agent
+* Minimalised Amazon Linux AMI
+
+[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#ecs-optimized-ami-linux-releasenotes)
+
+
+
 ### Updating... 
