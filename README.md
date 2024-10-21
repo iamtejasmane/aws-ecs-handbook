@@ -45,7 +45,7 @@ Service Quotas - Maximum values for the resources, actions, and items in your AW
 
 ## ECS Components
 
-### Cluster:
+#### Cluster:
 Logical grouping of resources namely services and tasks. With Fargete, cluster can exist without instances. 
 
 In addition to tasks and services, a cluster consists of the following resources:
@@ -97,5 +97,34 @@ The following are general concepts about Amazon ECS clusters.
 [Reference.](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
 
 
+#### Task Definition 
+
+A JSON formatted template describing what the associated task will run. It contains one or more container specifications to be launched and associated “docker run” parameters. It also defines the networking mode, task placement constraints and volume mounts associated with the task. 
+
+#### Container Instance
+An EC2 instance running the ECS agent which has registered itself to a cluster. 
+
+#### Task
+An instantiation of a task definition, which launch container or containers listed within the task definition.
+
+#### Container agent: 
+An application running on ECS container instances that performs the “bridge” between the local docker daemon API and the ECS endpoint.
+
+#### Service:
+The service component allows you to run and maintain a specified number of instances of a task definition. This is capable of integrating with Elastic Load Balancer (ALB) and of being scaled up or down based on specific CloudWatch Metrics by leveraging Application Auto Scaling. 
+
+We recommend that you use the service scheduler for long running stateless services and applications. The service scheduler ensures that the scheduling strategy that you specify is followed and reschedules tasks when a task fails. For example, if the underlying infrastructure fails, the service scheduler reschedules a task. You can use task placement strategies and constraints to customize how the scheduler places and terminates tasks. If a task in a service stops, the scheduler launches a new task to replace it. This process continues until your service reaches your desired number of tasks based on the scheduling strategy that the service uses. The scheduling strategy of the service is also referred to as the service type.
+
+[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
+
+
+#### Scheduler:
+An ECS mechanism that determines the task placement on specific container instances, based on a set algorithm that takes into account several variables. 
+
+#### Container: 
+A Docker container that was launched as part of a task. 
+____________
+
+### ECS-optimized Linux AMIs
 
 ### Updating... 
