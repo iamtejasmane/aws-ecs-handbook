@@ -94,7 +94,7 @@ The following are general concepts about Amazon ECS clusters.
 * You can use Service Auto Scaling to scale Fargate tasks. For more information, see Automatically scale your Amazon ECS service.
 * You can configure a default Service Connect namespace for a cluster. After you set a default Service Connect namespace, any new services created in the cluster can be added as client services in the namespace by turning on Service Connect. No additional configuration is required. For more information, see Use Service Connect to connect Amazon ECS services with short names.
 
-[Reference.](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html)
 
 
 #### Task Definition 
@@ -115,7 +115,7 @@ The service component allows you to run and maintain a specified number of insta
 
 We recommend that you use the service scheduler for long running stateless services and applications. The service scheduler ensures that the scheduling strategy that you specify is followed and reschedules tasks when a task fails. For example, if the underlying infrastructure fails, the service scheduler reschedules a task. You can use task placement strategies and constraints to customize how the scheduler places and terminates tasks. If a task in a service stops, the scheduler launches a new task to replace it. This process continues until your service reaches your desired number of tasks based on the scheduling strategy that the service uses. The scheduling strategy of the service is also referred to as the service type.
 
-[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
 
 
 #### Scheduler:
@@ -137,8 +137,94 @@ Components: 
 * ECS Agent
 * Minimalised Amazon Linux AMI
 
-[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#ecs-optimized-ami-linux-releasenotes)
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#ecs-optimized-ami-linux-releasenotes)
+
+ECS Container Instances 
+* Is an EC2 instance where tasks are run
+* Include a running ECS agent
+* Registered to a Cluster
+* Need access to communicate with the amazon ECS service endpoint (IGW, NAT, HTTP Proxy, VPC endpoint)
+* Instance types can’t be changed; the instance must be replaced.
+* You can’t deregister an instance from one cluster and move to another.
+* ECS-optimized AMI is provided and is the recommended way to run ECS EC2 task
+
+“The above doesn’t apply to Fargete, because Fargate abstracts the container instances outside the customer control.” 
+
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-capacity.html)
+____________
+
+### Container Instance LifeCycle
+
+**Active**:
+* A container instance can accept run task requests. 
+* The one that will be used to place tasks scheduled by a Scheduler or the user.
+
+**Draining**:
+* No new Tasks are placed on the instance. 
+* Active Services are ended and relocated to other instances. 
+* Doc: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/container-instance-draining.html
+
+**Inactive**:
+* If you deregister or end a container instance, the container instance status changes to INACTIVE immediately
+
+**ECS-Agent Connected**:
+* ECS-Agent CONNECTED status indicates the agent is able to talk with the ECS Scheduler on AWS.
+
+**ECS-Agent Disconnected**: 
+* ECS-Agent DISCONNECTED status indicates there is a problem with the agent. It can be networking or permissions.
+* [Reference Read](https://repost.aws/knowledge-center/ecs-agent-disconnected)
+
+____________
+### Container Instance Bootstrap components
+
+#### ECS Agent
+
+When the ECS agent starts on an instance, it will search for configuration options from the file ecs.config in location /etc/ecs. The attribute in the ECS configuration file, which indicates to which cluster the instance should be registered, is ECS_CLUSTER. 
+
+To register an EC2 instance with ECS cluster, add the attribute ECS_CLUSTER to file /etc/ecs/ecs.conf. There are several options that can be added to the ECS agent, such as the log level, that the agent should log the message to, proxy server, from which the ECS agent should communicate, and others. All those attributes can be added to the ECS.conf file before the agent starts.
+
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-config.html)
+
+#### Docker Daemon
+
+Similar to the ECS agent, the Docker daemon will load the configuration attributes from one of the four configuration
+files shown here. 
+* /etc/sysconfig/docker
+* /etc/sysconfig/docker-storage
+* /etc/sysconfig/docker-storage-setup
+* /etc/docker/daemon.json
+
+You should add the required options to one of these files before the Docker daemon starts, for the options to  take effect. These options include 
+* The base device size
+* Debug level logging,
+* Storage options, 
+* Networking options, and others.
+
+Select the link below for all of the options available for the Docker daemon.
+[Reference Read](https://docs.docker.com/reference/cli/dockerd/)
 
 
+Cloud-init
+Cloud-init is a package available to configure cloud instances on boot. There are several different formats supported by Cloud-init. 
+
+We pass a MIME file as part of the instance user data, and depending on the format of the content of the user data file, the commands or scripts in the file, will be started at different points in time during the boot. Coming up, you will look at the shellscript format (to configure ECS agent) and cloud-boothook format (to configure Docker daemon).
+[Reference Read](https://cloudinit.readthedocs.io/en/latest/index.html)
+
+
+User Data Format Used to Configure ECS Agent: `text/x-shellscript`<br>
+User Data format used to configure Docker Daemon: `text/cloud-boothook` <br>
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/bootstrap_container_instance.html)
+
+
+Bootstrapping an ECS instance to configure the ECS Agent
+
+For example: -
+```
+#!/bin/bash
+echo “ECS_CLUSTER=MyCluster” >> /etc/ecs/ecs.config
+echo “ECS_LOGLEVEL=debug” >> /etc/ecs/ecs.config
+```
+____________
+### ECS Container Agent
 
 ### Updating... 
