@@ -213,12 +213,11 @@ We pass a MIME file as part of the instance user data, and depending on the form
 
 User Data Format Used to Configure ECS Agent: `text/x-shellscript`<br>
 User Data format used to configure Docker Daemon: `text/cloud-boothook` <br>
+
 [Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/bootstrap_container_instance.html)
 
 
-Bootstrapping an ECS instance to configure the ECS Agent
-
-For example: -
+Bootstrapping an ECS instance to configure the ECS Agent. For example: -
 ```
 #!/bin/bash
 echo “ECS_CLUSTER=MyCluster” >> /etc/ecs/ecs.config
@@ -226,5 +225,45 @@ echo “ECS_LOGLEVEL=debug” >> /etc/ecs/ecs.config
 ```
 ____________
 ### ECS Container Agent
+ECS Container Agent
+* ECS container agent Open-source, programmed In Go. 
+* Process ECS commands and turns them into Docker commands.
+* Instruct EC2 instances to start/stop containers, monitor resources. 
+* Repo Link: https://github.com/aws/amazon-ecs-agent/
 
-### Updating... 
+Linux: Amazon/Linux AMI: On Amazon or other Linux AMIs, ECS container agent will be run in a Docker container on an EC2 instance. 
+
+Windows: On Windows AMI, ECS container agent runs as a service on the host. “\\. \pipe\docker_engine”
+
+API: ECS container agent provides an API for gathering details about the container instance. 
+	Curl command: 
+	$ curl http://localhost:51678/v1/metadata | python - mjson.tool
+
+For ECS-Optimized AMI, ECS agent is preinstalled. For manual installation on refer to the below link:Doc: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-install.html
+
+Understanding “Agent Disconnected”
+
+A container instance to register to the cluster and function with ECS, the ECS agent must be in connected status. It is important to note that the ECS agent will disconnect and reconnect several times per hour to ensure that the connectivity can be established, and that there are no connectivity issues.
+
+If an agent stays in a disconnected state for a long period, this indicates a problem with: 
+* The agent, 
+* Instance, 
+* Permissions, 
+* Connectivity, or 
+* The service. 
+
+Problems can occur when an agent has been disconnected for an extended period of time, because the instance will not be able to receive commands from the ECS Scheduler. This can affect cluster operations because tasks may be left running, even after an update to the service, and tasks that fail on that particular instance will not be restarted.
+
+If the agent is unable to reconnect to the service for any reason, you will need to either troubleshoot the issue or just end the instance.
+
+#### ECS Anywhere
+ 
+It is a feature of ECS for running and managing container workloads on your infrastructure to help you meet compliance requirements and scale your business without sacrificing on-premises investments. 
+
+[Additional Read](https://aws.amazon.com/ecs/anywhere/)
+
+________
+
+### Task Definitions
+
+### Progressing... 
