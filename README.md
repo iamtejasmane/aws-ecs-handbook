@@ -218,7 +218,7 @@ User Data format used to configure Docker Daemon: `text/cloud-boothook` <br>
 
 
 Bootstrapping an ECS instance to configure the ECS Agent. For example: -
-```
+```bash
 #!/bin/bash
 echo “ECS_CLUSTER=MyCluster” >> /etc/ecs/ecs.config
 echo “ECS_LOGLEVEL=debug” >> /etc/ecs/ecs.config
@@ -229,19 +229,20 @@ ECS Container Agent
 * ECS container agent Open-source, programmed In Go. 
 * Process ECS commands and turns them into Docker commands.
 * Instruct EC2 instances to start/stop containers, monitor resources. 
-* Repo Link: https://github.com/aws/amazon-ecs-agent/
+* [GitHub Repostitory](https://github.com/aws/amazon-ecs-agent/)
 
 Linux: Amazon/Linux AMI: On Amazon or other Linux AMIs, ECS container agent will be run in a Docker container on an EC2 instance. 
 
-Windows: On Windows AMI, ECS container agent runs as a service on the host. “\\. \pipe\docker_engine”
+Windows: On Windows AMI, ECS container agent runs as a service on the host. `\\. \pipe\docker_engine`
 
 API: ECS container agent provides an API for gathering details about the container instance. 
-	Curl command: 
-	$ curl http://localhost:51678/v1/metadata | python - mjson.tool
+	
+Curl command: 
+	`$ curl http://localhost:51678/v1/metadata | python - mjson.tool`
 
-For ECS-Optimized AMI, ECS agent is preinstalled. For manual installation on refer to the below link:Doc: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-install.html
+For ECS-Optimized AMI, ECS agent is preinstalled. For manual installation on refer to the [link](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-install.html).
 
-Understanding “Agent Disconnected”
+#### Understanding “Agent Disconnected”
 
 A container instance to register to the cluster and function with ECS, the ECS agent must be in connected status. It is important to note that the ECS agent will disconnect and reconnect several times per hour to ensure that the connectivity can be established, and that there are no connectivity issues.
 
