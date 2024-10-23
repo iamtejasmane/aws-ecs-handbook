@@ -368,5 +368,23 @@ Credential Endpoint: `curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI`
 
 [(ECS and ECS agent require) Amazon ECS <i>task execution role.</i>](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html)
 
+_______
+
+#### Container health checks
+
+If a task is run manually, and not part of service, the task will continue its lifecycle regardless of its health status. If a task is part of a service and reports as unhealthy, the task will be stopped and replaced. 
+
+[Health Check](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definition_healthcheck)
+
+[Health Check API](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html)
+
+Container health status:
+1. **HEALTHY**: If health check successful. 
+2. **UNHEALTHY**: If health check failed.
+3. **UNKNOWN**: if health is being evaluated or no health check defined for a task. 
+
+<i>How to pass sensitive data to containers?</i>
+* “Secret” in AWS Secret Manager
+* “Parameter” in AWS Systems Manager Parameter Store. 
 
 ### Progressing... 
