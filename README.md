@@ -281,12 +281,28 @@ ________
 [Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
 
 
-Tasks
+#### Tasks
 * Standalone
 * Tasks as a part of service
 * Scheduled tasks
 [Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html)
 
+#### Task Lifecycle flow
+**Running**: The task is successfully running.
+
+**Deactivating**: This is a transition state where Amazon ECS has to perform additional steps before the task is stopped. For example, for tasks that are part of a service that’s configured to use multiple Elastic Load Balancing target groups, the target group deregistration occurs during this state. 
+
+**Stopping**: This is a transition state where Amazon ECS is waiting on the container agent to take further action.
+
+**Deprovisioning**: Amazon ECS has to perform additional steps after the task has stopped, but before the task transitions to the STOPPED state. For example, for tasks that use the awsvpc network mode, the elastic network interface needs to be detached and deleted. 
+
+**Provisioning**: Amazon ECS has to perform additional steps before the task is launched. For example, for tasks that use the awsvpc network mode, the elastic network interface needs to be provisioned.
+
+**Pending**:  This is a transition state where Amazon ECS is waiting on the container agent to take further action. A task stays in the pending state until there are available resources for the task.
+
+**Activating**: This is a transition state where Amazon ECS has to perform additional steps after the task is Launched but before the task can transition to the RUNNING state. For example, for tasks that have service discovery configured, the service discovery resources must be created. For tasks that are part of a service that’s configured to use multiple Elastic Load Balancing target groups, the target group registration occurs during this state. 
+
+**Stopped**: The task has been successfully stopped. 
 
 
 ### Progressing... 
