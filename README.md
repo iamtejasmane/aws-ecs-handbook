@@ -266,5 +266,27 @@ It is a feature of ECS for running and managing container workloads on your infr
 ________
 
 ### Task Definitions
+* The docker images to use with the containers in your task.
+* How much CPU and memory to use with each container.
+* The launch type to use, which determines the infrastructure on which your tasks are hosted. 
+* Whether containers are linked together in a task.
+* The docker networking mode to use for the containers in your task. 
+* Whether the task should continue to run if the container finishes or fails. 
+* The command the container should run when it is started. 
+* Any data volumes that should be used with the containers in the task. 
+* (Optional) The environment variables that should be passed to the container when it starts. 
+* (Optional) The ports from the container to map to the host container instance. 
+* (Optional) The IAM role that your tasks should use for permissions. 
+
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
+
+
+Tasks
+* Standalone
+* Tasks as a part of service
+* Scheduled tasks
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html)
+
+
 
 ### Progressing... 
