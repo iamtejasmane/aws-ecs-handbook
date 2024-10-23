@@ -287,6 +287,7 @@ ________
 * Scheduled tasks
 [Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html)
 
+
 #### Task Lifecycle flow
 **Running**: The task is successfully running.
 
@@ -303,6 +304,51 @@ ________
 **Activating**: This is a transition state where Amazon ECS has to perform additional steps after the task is Launched but before the task can transition to the RUNNING state. For example, for tasks that have service discovery configured, the service discovery resources must be created. For tasks that are part of a service that’s configured to use multiple Elastic Load Balancing target groups, the target group registration occurs during this state. 
 
 **Stopped**: The task has been successfully stopped. 
+
+Tasks and Scheduling: Services [[Doc]](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html#:~:text=Scheduled%20tasks.-,Custom%20schedulers,-With%20Amazon%20ECS)
+
+
+### Key Task and Service Definition Parameters
+
+Task Definition paramenters ECS [[Doc](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)]
+
+#### Network Modes in ECS 
+
+**Host**
+
+ 
+The host network mode is the most basic network mode that’s supported in Amazon ECS. Tasks uses host network mode to map container port directly to Elastic Networking Interface (ENI) of EC2 instance that hosts the task. Dynamic Port mapping is not possible here.</br>
+ 
+
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/networking-networkmode-host.html)
+
+**Bridge**
+
+The default network mode on linux. The bridge network mode allows you to use a virtual network bridge to create a layer between the host and the networking of the container. 
+
+[Reference Read](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/networking-networkmode-bridge.html)
+
+**AWSVPC**
+
+The default network mode on linux. The bridge network mode allows you to use a virtual network bridge to create a layer between the host and the networking of the container. 
+
+Additional Reads:
+- [Network Mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#network_mode)
+- [Network Configuration](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service_definition_parameters.html#sd-networkconfiguration)
+- [Run Task](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RunTask.html) 
+
+**None**
+
+The will hove no external connectivity.
+
+
+**Default**
+
+This is the default network mode on Windows. The task uses Docker’s built-in virtual network on Windows. Docker for Windows uses the Network Address Translation (NAT) network driver. 
+
+
+[Task networking considerations for AWSVPC network mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html#task-networking-considerations)
+
 
 
 ### Progressing... 
