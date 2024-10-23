@@ -384,7 +384,7 @@ Container health status:
 3. **UNKNOWN**: if health is being evaluated or no health check defined for a task. 
 
 <i>How to pass sensitive data to containers?</i>
-* “Secret” in AWS Secret Manager
-* “Parameter” in AWS Systems Manager Parameter Store. 
+* “Secret” in AWS Secret Manager [[Doc](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/secrets-envvar-secrets-manager.html)]
+* “Parameter” in AWS Systems Manager Parameter Store.[[Doc](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/secrets-envvar-ssm-paramstore.html)] 
 
 ### Progressing... 
