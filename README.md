@@ -349,6 +349,24 @@ This is the default network mode on Windows. The task uses Docker’s built-in v
 
 [Task networking considerations for AWSVPC network mode](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking-awsvpc.html#task-networking-considerations)
 
+#### ECS Resource Management
+- [ECS Task Definition parameters](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)
+- [How Amazon ECS manages CPU and memory resources](https://aws.amazon.com/blogs/containers/how-amazon-ecs-manages-cpu-and-memory-resources/)
+
+______
+
+### IAM Roles in a Task Definition
+
+* **taskRoleArn**: Provides permissions for containers or applications to interact with AWS services. 
+* **executionRoleArn**: Provides permissions for ECS agent.
+
+[ECS task definition template](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-definition-template.html)
+
+Credential Endpoint: `curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI`
+
+[(Containers require) <i>task role.</i>](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html)
+
+[(ECS and ECS agent require) Amazon ECS <i>task execution role.</i>](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html)
 
 
 ### Progressing... 
